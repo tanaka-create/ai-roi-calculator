@@ -15,8 +15,7 @@
   --orange-dark: #C87A10;
   --brown:       #4A3520;
   --brown-mid:   #7A5C38;
-  --text:        #333;
-  --muted:       #777;
+  --muted:       #888;
   --border:      #D4E4C4;
   --input-bg:    #EEF5E8;
   --white:       #FFFFFF;
@@ -25,438 +24,392 @@
 }
 body {
   font-family: "Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;
-  background: #F7F9F5;
-  color: var(--text);
+  background: #F0F4EC;
+  color: #333;
   font-size: 15px;
   line-height: 1.6;
   min-height: 100vh;
+  padding: 40px 16px 80px;
 }
-.hero {
-  background: linear-gradient(180deg, #C8DFB4 0%, #DFF0CC 60%, #EEF8E4 100%);
+
+.wrap {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* TITLE */
+.page-title {
   text-align: center;
-  padding: 32px 20px 28px;
+  margin-bottom: 28px;
 }
-.hero h1 {
-  font-size: 28px;
+.page-title h1 {
+  font-size: 22px;
   font-weight: 900;
   color: var(--green-dark);
-  letter-spacing: .02em;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
-.hero p { font-size: 14px; color: var(--brown-mid); }
-.content {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 32px 20px 80px;
+.page-title p {
+  font-size: 13px;
+  color: var(--brown-mid);
 }
-.section-block {
+
+/* CARD */
+.card {
   background: var(--white);
   border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 28px 32px;
-  margin-bottom: 20px;
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
 }
-.section-heading {
-  font-size: 17px;
+
+.card-heading {
+  font-size: 14px;
   font-weight: 800;
   color: var(--brown);
-  margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--green-light);
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
-.section-heading .icon {
-  width: 28px; height: 28px;
+.card-heading .num {
+  width: 24px; height: 24px;
   background: var(--green-mid);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px; color: white; flex-shrink: 0;
-  font-weight: 900;
-}
-.form-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-.form-row:last-child { margin-bottom: 0; }
-.form-label {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--brown);
-  min-width: 120px;
+  font-size: 13px; font-weight: 900; color: white;
   flex-shrink: 0;
 }
-.input-wrap { display: flex; align-items: center; gap: 8px; flex: 1; }
-.unit { font-size: 14px; color: var(--brown-mid); white-space: nowrap; }
-input[type="number"], input[type="text"] {
+
+/* 時給 */
+.rate-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rate-row label {
+  font-size: 14px; font-weight: 700; color: var(--brown);
+  white-space: nowrap;
+}
+.rate-row .yen { font-size: 14px; color: var(--brown-mid); }
+input[type="number"] {
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px; font-weight: 700;
   color: var(--brown);
   background: var(--input-bg);
   border: 1.5px solid var(--border);
   border-radius: 8px;
-  padding: 10px 14px;
+  padding: 9px 12px;
   outline: none;
-  transition: border-color .15s, background .15s;
+  width: 120px;
   font-variant-numeric: tabular-nums;
   -webkit-appearance: none;
+  transition: border-color .15s;
 }
-input[type="number"]:focus, input[type="text"]:focus {
-  border-color: var(--green-mid);
-  background: #E8F2DE;
+input[type="number"]:focus { border-color: var(--green-mid); background: #E4F0DA; }
+input[type="text"] {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--brown);
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  outline: none;
+  width: 100%;
+  transition: border-color .15s;
+  -webkit-appearance: none;
 }
-input[type="number"] { width: 130px; font-weight: 700; }
-.form-hint {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: -14px;
-  margin-bottom: 16px;
-  padding-left: 136px;
-}
-.task-list { display: flex; flex-direction: column; gap: 12px; }
+input[type="text"]:focus { border-color: var(--green-mid); background: #E4F0DA; }
+.rate-hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+/* TASKS */
+.task-list { display: flex; flex-direction: column; gap: 10px; }
+
 .task-item {
   background: var(--green-pale);
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  padding: 16px 18px;
-  animation: fadeIn .2s ease;
+  padding: 14px 14px 12px;
+  animation: fadeIn .18s ease;
 }
 @keyframes fadeIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
-.task-item-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+
+.task-name-row {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
 }
-.task-num {
-  font-size: 12px; font-weight: 800;
+.task-badge {
+  font-size: 11px; font-weight: 800;
   background: var(--green-mid); color: white;
-  border-radius: 4px; padding: 2px 8px;
-  letter-spacing: .04em;
-  flex-shrink: 0;
+  border-radius: 4px; padding: 2px 7px;
+  flex-shrink: 0; letter-spacing: .03em;
 }
-.task-name-input {
-  flex: 1;
-  font-size: 14px !important;
-  background: white !important;
-  border-color: var(--border) !important;
-  padding: 8px 12px !important;
+.task-name-row input[type="text"] {
+  background: white; border-color: #DDD; font-size: 14px;
 }
 .btn-del {
-  background: none; border: 1.5px solid #CCC;
-  border-radius: 6px; color: #AAA;
-  font-size: 15px; width: 30px; height: 30px;
+  background: none; border: 1.5px solid #CCC; border-radius: 6px;
+  color: #BBB; font-size: 16px; width: 28px; height: 28px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; transition: all .15s; line-height: 1;
 }
-.btn-del:hover { border-color: #E05; color: #E05; background: #FEF0F0; }
-.task-hours {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.btn-del:hover { border-color: #D44; color: #D44; background: #FEF0F0; }
+
+.task-hours-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
 }
-.task-hours-block label {
-  font-size: 12px; font-weight: 700; color: var(--muted);
-  letter-spacing: .04em; display: block; margin-bottom: 6px;
+.hours-block label {
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  display: block; margin-bottom: 5px; letter-spacing: .03em;
 }
-.task-hours-block .input-line { display: flex; align-items: center; gap: 6px; }
-.task-hours-block input {
-  width: 90px !important; font-size: 14px !important;
-  background: white !important; border-color: var(--border) !important;
-  padding: 8px 10px !important;
+.hours-block .hours-input {
+  display: flex; align-items: center; gap: 5px;
 }
-.task-hours-block .unit { font-size: 13px; }
-.saving-line {
-  margin-top: 10px; padding-top: 10px;
+.hours-block input[type="number"] {
+  width: 80px; font-size: 14px; padding: 8px 10px;
+  background: white; border-color: #DDD;
+}
+.hours-block .unit { font-size: 12px; color: var(--muted); }
+
+.task-saved {
+  margin-top: 10px; padding-top: 8px;
   border-top: 1px dashed var(--border);
-  font-size: 13px; color: var(--green-dark);
-  font-weight: 700;
+  font-size: 13px; font-weight: 700;
+  color: var(--green-dark);
   font-variant-numeric: tabular-nums;
 }
-.saving-line.zero { color: var(--muted); font-weight: 400; }
-.btn-add-task {
-  margin-top: 4px;
-  width: 100%;
-  padding: 12px;
-  background: white;
-  border: 1.5px dashed var(--green-mid);
-  border-radius: 10px;
-  color: var(--green-dark);
-  font-family: inherit;
-  font-size: 14px; font-weight: 700;
+.task-saved.zero { color: var(--muted); font-weight: 400; }
+
+.btn-add {
+  margin-top: 4px; width: 100%; padding: 11px;
+  background: white; border: 1.5px dashed var(--green-mid);
+  border-radius: 10px; color: var(--green-dark);
+  font-family: inherit; font-size: 14px; font-weight: 700;
   cursor: pointer; transition: all .15s;
 }
-.btn-add-task:hover { background: var(--green-pale); }
-.result-block {
+.btn-add:hover { background: var(--green-pale); }
+
+/* RESULT */
+.result-card {
   background: var(--result-bg);
   border: 2px solid var(--result-bdr);
-  border-radius: 12px;
-  padding: 28px 32px;
-  margin-bottom: 20px;
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
 }
-.result-title {
-  font-size: 15px; font-weight: 800; color: var(--brown);
-  margin-bottom: 20px; padding-bottom: 12px;
-  border-bottom: 2px solid var(--result-bdr);
-}
-.result-annual {
+.result-card .card-heading { margin-bottom: 18px; }
+
+.annual-box {
   background: var(--green-dark);
   border-radius: 10px;
-  padding: 20px 24px;
-  color: white;
-  margin-bottom: 16px;
+  padding: 18px 20px;
   text-align: center;
+  color: white;
+  margin-bottom: 14px;
 }
-.result-annual .ra-label {
-  font-size: 12px; font-weight: 700; letter-spacing: .1em;
-  opacity: .75; margin-bottom: 6px;
-}
-.result-annual .ra-num {
-  font-size: 52px; font-weight: 900; letter-spacing: -2px;
+.annual-box .al { font-size: 12px; opacity: .72; letter-spacing: .06em; margin-bottom: 4px; }
+.annual-box .an {
+  font-size: 46px; font-weight: 900; letter-spacing: -2px;
   font-variant-numeric: tabular-nums; line-height: 1;
 }
-.result-annual .ra-sub { font-size: 12px; opacity: .7; margin-top: 6px; }
+.annual-box .as { font-size: 12px; opacity: .65; margin-top: 5px; }
+
 .roi-box {
   background: white; border: 1.5px solid var(--result-bdr);
-  border-radius: 8px; padding: 14px 18px;
-  font-size: 13px; color: var(--brown-mid);
-  line-height: 1.7; margin-bottom: 16px;
+  border-radius: 8px; padding: 12px 16px;
+  font-size: 13px; color: var(--brown-mid); line-height: 1.7;
+  margin-bottom: 14px;
 }
-.roi-box strong { color: var(--orange-dark); font-size: 15px; }
-.result-rows { display: flex; flex-direction: column; }
-.result-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid #EEE0C0;
-  gap: 16px;
+.roi-box strong { color: var(--orange-dark); font-size: 14px; display: block; margin-bottom: 2px; }
+
+.metrics { display: flex; flex-direction: column; }
+.metric-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 11px 0; border-bottom: 1px solid #EEE0C0; gap: 12px;
 }
-.result-row:last-child { border-bottom: none; }
-.result-row .rl { font-size: 14px; color: var(--brown-mid); font-weight: 600; }
-.result-row .rv-wrap { text-align: right; }
-.result-row .rv {
-  font-size: 24px; font-weight: 900;
-  font-variant-numeric: tabular-nums;
-  color: var(--brown); letter-spacing: -.5px; display: block;
+.metric-row:last-child { border-bottom: none; }
+.metric-row .ml { font-size: 13px; color: var(--brown-mid); font-weight: 600; }
+.metric-row .mr { text-align: right; }
+.metric-row .mv {
+  font-size: 20px; font-weight: 900;
+  font-variant-numeric: tabular-nums; letter-spacing: -.3px;
+  color: #333; display: block;
 }
-.result-row .rv.green { color: #2A7A1A; }
-.result-row .rv.orange { color: var(--orange-dark); }
-.result-row .rsub { font-size: 11px; color: var(--muted); }
-@media (max-width: 520px) {
-  .section-block, .result-block { padding: 20px 16px; }
-  .form-hint { padding-left: 0; }
-  .task-hours { grid-template-columns: 1fr; }
-  .result-annual .ra-num { font-size: 40px; }
-}
+.metric-row .mv.g { color: #2A7A1A; }
+.metric-row .mv.o { color: var(--orange-dark); }
+.metric-row .ms { font-size: 11px; color: var(--muted); }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="hero">
-  <h1>AI 時間削減シミュレーター</h1>
-  <p>業務の時間を入力するだけで、AI導入によるコスト削減額を試算します</p>
-</div>
-
-<div class="content">
-
-  <div class="section-block">
-    <div class="section-heading">
-      <span class="icon">1</span>あなたの時給・人件費を教えてください
-    </div>
-    <div class="form-row">
-      <span class="form-label">時給（目安）</span>
-      <div class="input-wrap">
-        <span class="unit">¥</span>
-        <input type="number" id="hourlyRate" value="3000" min="0" step="100">
-        <span class="unit">/ 時間</span>
-      </div>
-    </div>
-    <div class="form-hint">月給 ÷ 160時間、または外注・採用コストの目安で入力してください</div>
+  <div class="page-title">
+    <h1>AI 時間削減シミュレーター</h1>
+    <p>業務の時間を入力すると、削減コストが試算されます</p>
   </div>
 
-  <div class="section-block">
-    <div class="section-heading">
-      <span class="icon">2</span>AIで効率化したい業務を入力してください
+  <!-- 時給 -->
+  <div class="card">
+    <div class="card-heading"><span class="num">1</span>あなたの時給を入力</div>
+    <div class="rate-row">
+      <label>時給</label>
+      <span class="yen">¥</span>
+      <input type="number" id="hourlyRate" value="3000" min="0" step="100">
+      <span class="yen">/ 時間</span>
     </div>
+    <div class="rate-hint">月給 ÷ 160h の目安で入力してください</div>
+  </div>
+
+  <!-- 業務 -->
+  <div class="card">
+    <div class="card-heading"><span class="num">2</span>効率化したい業務を入力</div>
     <div class="task-list" id="taskList"></div>
-    <button class="btn-add-task" id="addBtn">＋ 業務を追加する</button>
+    <button class="btn-add" id="addBtn">＋ 業務を追加する</button>
   </div>
 
-  <div class="result-block">
-    <div class="result-title">シミュレーション結果</div>
+  <!-- 結果 -->
+  <div class="result-card">
+    <div class="card-heading"><span class="num" style="background:var(--orange);">3</span>削減コストの試算結果</div>
 
-    <div class="result-annual">
-      <div class="ra-label">年間で削減できるコスト（試算）</div>
-      <div class="ra-num" id="r-year">¥0</div>
-      <div class="ra-sub" id="r-year-sub">業務と時間を入力してください</div>
+    <div class="annual-box">
+      <div class="al">年間で削減できるコスト</div>
+      <div class="an" id="r-year">¥0</div>
+      <div class="as" id="r-year-sub">業務と時間を入力してください</div>
     </div>
 
     <div id="roiBox" class="roi-box" style="display:none;">
-      <strong id="roiMain"></strong><br>
+      <strong id="roiMain"></strong>
       <span id="roiSub"></span>
     </div>
 
-    <div class="result-rows">
-      <div class="result-row">
-        <span class="rl">削減できる時間 / 週</span>
-        <div class="rv-wrap">
-          <span class="rv green" id="r-week-h">0 h</span>
-          <span class="rsub" id="r-week-pct">—</span>
+    <div class="metrics">
+      <div class="metric-row">
+        <span class="ml">削減時間 / 週</span>
+        <div class="mr">
+          <span class="mv g" id="r-wh">0 h</span>
+          <span class="ms" id="r-wpct">—</span>
         </div>
       </div>
-      <div class="result-row">
-        <span class="rl">削減できる時間 / 月</span>
-        <div class="rv-wrap">
-          <span class="rv" id="r-month-h">0 h</span>
-          <span class="rsub">週 × 4.33</span>
+      <div class="metric-row">
+        <span class="ml">削減時間 / 月</span>
+        <div class="mr">
+          <span class="mv" id="r-mh">0 h</span>
+          <span class="ms">週 × 4.33</span>
         </div>
       </div>
-      <div class="result-row">
-        <span class="rl">削減できるコスト / 月</span>
-        <div class="rv-wrap">
-          <span class="rv green" id="r-month-c">¥0</span>
-          <span class="rsub" id="r-month-sub">—</span>
+      <div class="metric-row">
+        <span class="ml">削減コスト / 月</span>
+        <div class="mr">
+          <span class="mv g" id="r-mc">¥0</span>
+          <span class="ms" id="r-ms">—</span>
         </div>
       </div>
-      <div class="result-row">
-        <span class="rl">削減できるコスト / 年</span>
-        <div class="rv-wrap">
-          <span class="rv orange" id="r-year-c">¥0</span>
-          <span class="rsub">月額 × 12</span>
+      <div class="metric-row">
+        <span class="ml">削減コスト / 年</span>
+        <div class="mr">
+          <span class="mv o" id="r-yc">¥0</span>
+          <span class="ms">月額 × 12</span>
         </div>
       </div>
     </div>
   </div>
 
 </div>
-
 <script>
-const SUPPORT = 1100000;
-let tasks = [], uid = 0;
+var SUPPORT = 1100000;
+var tasks = [], uid = 0;
+function r1(n){return Math.round(n*10)/10;}
+function yen(n){return '¥'+Math.round(n).toLocaleString('ja-JP');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
 
-function r1(n) { return Math.round(n * 10) / 10; }
-function yen(n) { return '¥' + Math.round(n).toLocaleString('ja-JP'); }
-
-function addTask(name, before, after) {
-  name = name || ''; before = before || ''; after = after || '';
-  const id = ++uid;
-  tasks.push({ id, name, before, after });
+function addTask(name,before,after){
+  name=name||'';before=before||'';after=after||'';
+  var id=++uid;
+  tasks.push({id:id,name:name,before:before,after:after});
   renderTasks();
-  setTimeout(function() {
-    var el = document.querySelector('[data-id="' + id + '"] .t-name');
-    if (el) el.focus();
-  }, 50);
+  setTimeout(function(){
+    var el=document.querySelector('[data-id="'+id+'"] .t-name');
+    if(el)el.focus();
+  },50);
 }
-
-function removeTask(id) {
-  tasks = tasks.filter(function(t) { return t.id !== id; });
-  renderTasks(); calc();
+function removeTask(id){
+  tasks=tasks.filter(function(t){return t.id!==id;});
+  renderTasks();calc();
 }
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-}
-
-function renderTasks() {
-  var list = document.getElementById('taskList');
-  list.innerHTML = '';
-  tasks.forEach(function(task, i) {
-    var b = parseFloat(task.before) || 0;
-    var a = parseFloat(task.after)  || 0;
-    var s = Math.max(0, b - a);
-    var pct = b > 0 ? Math.round(s / b * 100) : 0;
-
-    var div = document.createElement('div');
-    div.className = 'task-item';
-    div.dataset.id = task.id;
-    div.innerHTML =
-      '<div class="task-item-header">' +
-        '<span class="task-num">業務 ' + (i + 1) + '</span>' +
-        '<input type="text" class="t-name task-name-input" placeholder="例：SNS投稿の文章作成" value="' + esc(task.name) + '">' +
-        '<button class="btn-del" title="削除">&times;</button>' +
-      '</div>' +
-      '<div class="task-hours">' +
-        '<div class="task-hours-block">' +
-          '<label>今かかっている時間</label>' +
-          '<div class="input-line">' +
-            '<input type="number" class="t-before" value="' + esc(task.before) + '" min="0" step="0.5" placeholder="8">' +
-            '<span class="unit">h / 週</span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="task-hours-block">' +
-          '<label>AI導入後の想定時間</label>' +
-          '<div class="input-line">' +
-            '<input type="number" class="t-after" value="' + esc(task.after) + '" min="0" step="0.5" placeholder="2">' +
-            '<span class="unit">h / 週</span>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="saving-line ' + (s === 0 ? 'zero' : '') + '">' +
-        (s > 0
-          ? '▶ 週 ' + r1(s) + ' h 削減（' + pct + '% カット）'
-          : '時間を入力すると削減量が表示されます') +
+function renderTasks(){
+  var list=document.getElementById('taskList');
+  list.innerHTML='';
+  tasks.forEach(function(task,i){
+    var b=parseFloat(task.before)||0;
+    var a=parseFloat(task.after)||0;
+    var s=Math.max(0,b-a);
+    var pct=b>0?Math.round(s/b*100):0;
+    var div=document.createElement('div');
+    div.className='task-item';div.dataset.id=task.id;
+    div.innerHTML=
+      '<div class="task-name-row">'+
+        '<span class="task-badge">業務'+(i+1)+'</span>'+
+        '<input type="text" class="t-name" placeholder="例：SNS投稿の文章作成" value="'+esc(task.name)+'">'+
+        '<button class="btn-del">&times;</button>'+
+      '</div>'+
+      '<div class="task-hours-row">'+
+        '<div class="hours-block">'+
+          '<label>今かかる時間</label>'+
+          '<div class="hours-input">'+
+            '<input type="number" class="t-before" value="'+esc(task.before)+'" min="0" step="0.5" placeholder="8">'+
+            '<span class="unit">h/週</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="hours-block">'+
+          '<label>AI導入後</label>'+
+          '<div class="hours-input">'+
+            '<input type="number" class="t-after" value="'+esc(task.after)+'" min="0" step="0.5" placeholder="2">'+
+            '<span class="unit">h/週</span>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="task-saved '+(s===0?'zero':'')+'">'+
+        (s>0?'▶ 週 '+r1(s)+' h 削減（'+pct+'% カット）':'時間を入力すると削減量が出ます')+
       '</div>';
-
-    div.querySelector('.t-name').addEventListener('input', function(e) {
-      tasks.find(function(x){return x.id===task.id;}).name = e.target.value; calc();
-    });
-    div.querySelector('.t-before').addEventListener('input', function(e) {
-      tasks.find(function(x){return x.id===task.id;}).before = e.target.value; renderTasks(); calc();
-    });
-    div.querySelector('.t-after').addEventListener('input', function(e) {
-      tasks.find(function(x){return x.id===task.id;}).after = e.target.value; renderTasks(); calc();
-    });
-    div.querySelector('.btn-del').addEventListener('click', function() { removeTask(task.id); });
+    div.querySelector('.t-name').addEventListener('input',function(e){tasks.find(function(x){return x.id===task.id;}).name=e.target.value;calc();});
+    div.querySelector('.t-before').addEventListener('input',function(e){tasks.find(function(x){return x.id===task.id;}).before=e.target.value;renderTasks();calc();});
+    div.querySelector('.t-after').addEventListener('input',function(e){tasks.find(function(x){return x.id===task.id;}).after=e.target.value;renderTasks();calc();});
+    div.querySelector('.btn-del').addEventListener('click',function(){removeTask(task.id);});
     list.appendChild(div);
   });
 }
-
-function set(id, val) { var el = document.getElementById(id); if(el) el.textContent = val; }
-
-function calc() {
-  var rate = parseFloat(document.getElementById('hourlyRate').value) || 0;
-  var totB = 0, totA = 0;
-  tasks.forEach(function(t) { totB += parseFloat(t.before)||0; totA += parseFloat(t.after)||0; });
-
-  var wS = Math.max(0, totB - totA);
-  var mS = wS * 4.33;
-  var mC = mS * rate;
-  var yC = mC * 12;
-  var pct = totB > 0 ? Math.round(wS / totB * 100) : 0;
-
-  set('r-week-h',   r1(wS) + ' h');
-  set('r-week-pct', totB > 0 ? '削減率 ' + pct + '%（' + r1(totB) + ' h → ' + r1(totA) + ' h）' : '—');
-  set('r-month-h',  r1(mS) + ' h');
-  set('r-month-c',  yen(mC));
-  set('r-month-sub',rate > 0 ? '¥' + rate.toLocaleString('ja-JP') + ' × ' + r1(mS) + ' h' : '—');
-  set('r-year-c',   yen(yC));
-  set('r-year',     yen(yC));
-  set('r-year-sub', yC > 0
-    ? '週 ' + r1(wS) + ' h 削減 × 52 週 × ¥' + rate.toLocaleString('ja-JP')
-    : '業務と時間を入力してください');
-
-  var roiBox = document.getElementById('roiBox');
-  if (yC > 0 && mC > 0) {
-    roiBox.style.display = 'block';
-    var months = Math.round(SUPPORT / mC * 10) / 10;
-    document.getElementById('roiMain').textContent =
-      '個別サポート（¥1,100,000）は約 ' + months + ' ヶ月で回収できます';
-    document.getElementById('roiSub').textContent =
-      '年間 ' + yen(yC) + ' の削減効果があれば、' + months + ' ヶ月後には投資額を超えます。';
-  } else {
-    roiBox.style.display = 'none';
+function calc(){
+  var rate=parseFloat(document.getElementById('hourlyRate').value)||0;
+  var totB=0,totA=0;
+  tasks.forEach(function(t){totB+=parseFloat(t.before)||0;totA+=parseFloat(t.after)||0;});
+  var wS=Math.max(0,totB-totA);
+  var mS=wS*4.33;
+  var mC=mS*rate;
+  var yC=mC*12;
+  var pct=totB>0?Math.round(wS/totB*100):0;
+  set('r-wh',r1(wS)+' h');
+  set('r-wpct',totB>0?'削減率 '+pct+'%（'+r1(totB)+' h → '+r1(totA)+' h）':'—');
+  set('r-mh',r1(mS)+' h');
+  set('r-mc',yen(mC));
+  set('r-ms',rate>0?'¥'+rate.toLocaleString('ja-JP')+' × '+r1(mS)+' h':'—');
+  set('r-yc',yen(yC));
+  set('r-year',yen(yC));
+  set('r-year-sub',yC>0?'週 '+r1(wS)+' h削減 × 52週 × ¥'+rate.toLocaleString('ja-JP'):'業務と時間を入力してください');
+  var roiBox=document.getElementById('roiBox');
+  if(yC>0&&mC>0){
+    roiBox.style.display='block';
+    var months=Math.round(SUPPORT/mC*10)/10;
+    document.getElementById('roiMain').textContent='個別サポート（¥1,100,000）は約 '+months+' ヶ月で回収';
+    document.getElementById('roiSub').textContent='年間 '+yen(yC)+' の削減効果があれば、'+months+'ヶ月で投資額を超えます。';
+  }else{
+    roiBox.style.display='none';
   }
 }
-
-document.getElementById('addBtn').addEventListener('click', function() { addTask(); });
-document.getElementById('hourlyRate').addEventListener('input', calc);
-
-addTask('SNS投稿の文章作成', '6', '1.5');
-addTask('議事録・報告書の作成', '4', '1');
-addTask('', '', '');
+document.getElementById('addBtn').addEventListener('click',function(){addTask();});
+document.getElementById('hourlyRate').addEventListener('input',calc);
+addTask('SNS投稿の文章作成','6','1.5');
+addTask('議事録・報告書の作成','4','1');
+addTask('','','');
 calc();
 </script>
 </body>
