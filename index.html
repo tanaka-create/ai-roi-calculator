@@ -1,0 +1,483 @@
+<title>AI時間削減シミュレーター</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white:   #FFFFFF;
+  --ink:     #1C1C1C;
+  --mid:     #6B6B6B;
+  --faint:   #ADADAD;
+  --rule:    #E9E9E5;
+  --rowalt:  #F6F6F4;
+  --accent:  #B8291A;
+  --good:    #2A6A3F;
+}
+
+html { font-size: 15px; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  border-bottom: 1.5px solid var(--ink);
+  padding: 18px 40px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+.topbar-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.topbar-sub {
+  font-size: 12px;
+  color: var(--mid);
+  letter-spacing: .02em;
+}
+
+/* ── RATE ROW ── */
+.rate-zone {
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.rate-zone label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  white-space: nowrap;
+}
+.rate-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rate-input-wrap span {
+  font-size: 14px;
+  color: var(--mid);
+}
+input[type="number"], input[type="text"] {
+  font-family: inherit;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--ink);
+  padding: 4px 0 4px 2px;
+  outline: none;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  border-radius: 0;
+  -webkit-appearance: none;
+  transition: border-color .15s;
+}
+input[type="number"]:focus,
+input[type="text"]:focus {
+  border-color: var(--accent);
+}
+input[type="number"] { width: 120px; font-weight: 600; }
+input[type="text"]   { width: 100%; }
+
+.rate-hint {
+  font-size: 12px;
+  color: var(--faint);
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  min-height: calc(100vh - 110px);
+}
+
+/* ── LEFT: input panel ── */
+.input-panel {
+  border-right: 1px solid var(--rule);
+  padding: 32px 40px 60px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 20px;
+}
+
+/* TABLE */
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.task-table thead tr {
+  border-bottom: 1.5px solid var(--ink);
+}
+.task-table thead th {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  padding: 0 0 10px;
+  text-align: left;
+}
+.task-table thead th.num-col {
+  text-align: right;
+  padding-right: 16px;
+  white-space: nowrap;
+}
+.task-table thead th.saved-col {
+  text-align: right;
+}
+
+.task-table tbody tr {
+  border-bottom: 1px solid var(--rule);
+}
+.task-table tbody tr:nth-child(even) td {
+  background: var(--rowalt);
+}
+.task-table tbody td {
+  padding: 10px 0;
+  vertical-align: middle;
+}
+.task-table tbody td.num-col {
+  text-align: right;
+  padding-right: 16px;
+}
+.task-table tbody td input[type="number"] {
+  width: 80px;
+  text-align: right;
+  display: inline-block;
+}
+.task-table tbody td input[type="text"] {
+  border-bottom-color: transparent;
+}
+.task-table tbody td input[type="text"]:hover,
+.task-table tbody td input[type="text"]:focus {
+  border-bottom-color: var(--ink);
+}
+
+.unit {
+  font-size: 11px;
+  color: var(--faint);
+  margin-left: 2px;
+}
+
+.saved-val {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--good);
+  text-align: right;
+  padding-right: 4px;
+}
+.saved-val.zero { color: var(--faint); font-weight: 400; }
+
+.btn-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--faint);
+  font-size: 16px;
+  padding: 0 6px;
+  line-height: 1;
+  transition: color .15s;
+}
+.btn-remove:hover { color: var(--accent); }
+
+.btn-add {
+  margin-top: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--mid);
+  letter-spacing: .04em;
+  padding: 0;
+  border-bottom: 1px solid var(--mid);
+  padding-bottom: 1px;
+  transition: color .15s, border-color .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-add:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ── RIGHT: results ── */
+.result-panel {
+  padding: 32px 36px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.result-block {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.result-block:last-child { border-bottom: none; }
+
+.result-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 8px;
+}
+
+.result-num {
+  font-size: 32px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+  color: var(--ink);
+  line-height: 1;
+  font-family: Georgia, "Times New Roman", serif;
+  transition: color .25s;
+}
+.result-num.accent { color: var(--accent); }
+.result-num.green  { color: var(--good); }
+
+.result-sub {
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Annual big block */
+.annual-block {
+  padding: 28px 0 20px;
+  border-top: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  margin-top: 4px;
+}
+.annual-block .result-label { color: var(--ink); }
+.annual-block .result-num {
+  font-size: 48px;
+  letter-spacing: -2px;
+}
+
+/* ROI line */
+.roi-line {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.7;
+}
+.roi-line strong {
+  display: block;
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+/* Placeholder state */
+.placeholder-msg {
+  font-size: 13px;
+  color: var(--faint);
+  font-style: italic;
+}
+
+@media (max-width: 760px) {
+  .main { grid-template-columns: 1fr; }
+  .result-panel { border-top: 1.5px solid var(--ink); }
+  .topbar, .rate-zone, .input-panel, .result-panel { padding-left: 20px; padding-right: 20px; }
+}
+</style>
+
+<div class="topbar">
+  <span class="topbar-title">AI 時間削減シミュレーター</span>
+  <span class="topbar-sub">業務ごとの削減時間を入力すると、月・年間のコスト削減額が出ます</span>
+</div>
+
+<div class="rate-zone">
+  <label>時給・人件費</label>
+  <div class="rate-input-wrap">
+    <span>¥</span>
+    <input type="number" id="hourlyRate" value="3000" min="0" step="100">
+    <span>/ 時間</span>
+  </div>
+  <span class="rate-hint">※ 月給 ÷ 160 h、または外注・採用コストの目安で</span>
+</div>
+
+<div class="main">
+  <!-- LEFT -->
+  <div class="input-panel">
+    <div class="section-label">AIで効率化したい業務</div>
+
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th style="width:40%;">業務名</th>
+          <th class="num-col" style="width:18%;">今の時間<br><span style="font-weight:400;letter-spacing:0;text-transform:none;font-size:10px;">h / 週</span></th>
+          <th class="num-col" style="width:18%;">AI後の時間<br><span style="font-weight:400;letter-spacing:0;text-transform:none;font-size:10px;">h / 週</span></th>
+          <th class="saved-col" style="width:18%;">削減<br><span style="font-weight:400;letter-spacing:0;text-transform:none;font-size:10px;">h / 週</span></th>
+          <th style="width:6%;"></th>
+        </tr>
+      </thead>
+      <tbody id="taskBody"></tbody>
+    </table>
+
+    <button class="btn-add" id="addBtn">＋ 業務を追加</button>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="result-panel">
+
+    <div class="annual-block">
+      <div class="result-label">年間削減コスト（試算）</div>
+      <div class="result-num accent" id="r-year">¥0</div>
+      <div class="result-sub" id="r-year-sub">—</div>
+    </div>
+
+    <div class="result-block">
+      <div class="result-label">削減時間 / 週</div>
+      <div class="result-num" id="r-week-h">0 h</div>
+      <div class="result-sub" id="r-week-pct">削減率 — %</div>
+    </div>
+
+    <div class="result-block">
+      <div class="result-label">削減コスト / 月</div>
+      <div class="result-num green" id="r-month">¥0</div>
+      <div class="result-sub" id="r-month-sub">時給 × 削減時間 × 4.33 週</div>
+    </div>
+
+    <div class="result-block">
+      <div class="result-label">削減時間 / 月</div>
+      <div class="result-num" id="r-month-h">0 h</div>
+      <div class="result-sub">週の削減時間 × 4.33</div>
+    </div>
+
+    <div class="roi-line" id="roiLine" style="display:none;">
+      <strong id="roiMain"></strong>
+      <span id="roiSub"></span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SUPPORT = 1100000;
+let tasks = [];
+let uid = 0;
+
+function r(n, d=1) { return Math.round(n * 10**d) / 10**d; }
+function yen(n)    { return '¥' + Math.round(n).toLocaleString('ja-JP'); }
+function h(n)      { return r(n, 1) + ' h'; }
+
+function addTask(name='', before='', after='') {
+  const id = ++uid;
+  tasks.push({ id, name, before, after });
+  renderTable();
+  const el = document.querySelector(`tr[data-id="${id}"] .t-name`);
+  if (el) el.focus();
+}
+
+function removeTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  renderTable();
+  calc();
+}
+
+function renderTable() {
+  const tbody = document.getElementById('taskBody');
+  tbody.innerHTML = '';
+  tasks.forEach(task => {
+    const b = parseFloat(task.before) || 0;
+    const a = parseFloat(task.after)  || 0;
+    const s = Math.max(0, b - a);
+    const tr = document.createElement('tr');
+    tr.dataset.id = task.id;
+    tr.innerHTML = `
+      <td><input type="text" class="t-name" placeholder="例：SNS投稿の文章作成" value="${esc(task.name)}"></td>
+      <td class="num-col"><input type="number" class="t-before" value="${task.before}" min="0" step="0.5" placeholder="8"></td>
+      <td class="num-col"><input type="number" class="t-after" value="${task.after}" min="0" step="0.5" placeholder="2"></td>
+      <td class="saved-val ${s === 0 ? 'zero' : ''}">${s > 0 ? r(s,1) : '—'}</td>
+      <td><button class="btn-remove" title="削除">×</button></td>
+    `;
+    tr.querySelector('.t-name').addEventListener('input', e => {
+      tasks.find(x=>x.id===task.id).name = e.target.value; calc();
+    });
+    tr.querySelector('.t-before').addEventListener('input', e => {
+      tasks.find(x=>x.id===task.id).before = e.target.value; renderTable(); calc();
+    });
+    tr.querySelector('.t-after').addEventListener('input', e => {
+      tasks.find(x=>x.id===task.id).after = e.target.value; renderTable(); calc();
+    });
+    tr.querySelector('.btn-remove').addEventListener('click', () => removeTask(task.id));
+    tbody.appendChild(tr);
+  });
+}
+
+function esc(s) { return s.replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function set(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function calc() {
+  const rate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+  let totalB = 0, totalA = 0;
+  tasks.forEach(t => {
+    totalB += parseFloat(t.before) || 0;
+    totalA += parseFloat(t.after)  || 0;
+  });
+  const wSaved = Math.max(0, totalB - totalA);
+  const mSaved = wSaved * 4.33;
+  const ySaved = mSaved * 12;
+  const mCost  = mSaved * rate;
+  const yCost  = ySaved * rate;
+  const pct    = totalB > 0 ? Math.round(wSaved / totalB * 100) : 0;
+
+  set('r-week-h',   h(wSaved));
+  set('r-week-pct', `削減率 ${pct}%（${h(totalB)} → ${h(totalA)}）`);
+  set('r-month-h',  h(mSaved));
+  set('r-month',    yen(mCost));
+  set('r-month-sub',`¥${rate.toLocaleString('ja-JP')} × ${r(mSaved,1)} h`);
+  set('r-year',     yen(yCost));
+  set('r-year-sub', yCost > 0
+    ? `週 ${r(wSaved,1)} h 削減 × 52 週 × ¥${rate.toLocaleString('ja-JP')}`
+    : '業務と時間を入力してください');
+
+  const roiLine = document.getElementById('roiLine');
+  if (yCost > 0 && mCost > 0) {
+    roiLine.style.display = 'block';
+    const months = r(SUPPORT / mCost, 1);
+    document.getElementById('roiMain').textContent =
+      `個別サポート ¥1,100,000 は約 ${months} ヶ月で回収`;
+    document.getElementById('roiSub').textContent =
+      `月 ${yen(mCost)} の削減を続けると、${months} ヶ月後には投資額を超えます。`;
+  } else {
+    roiLine.style.display = 'none';
+  }
+}
+
+document.getElementById('addBtn').addEventListener('click', () => addTask());
+document.getElementById('hourlyRate').addEventListener('input', calc);
+
+// initial
+addTask('SNS投稿の文章作成', '6', '1.5');
+addTask('議事録・報告書の作成', '4', '1');
+addTask('', '', '');
+calc();
+</script>
